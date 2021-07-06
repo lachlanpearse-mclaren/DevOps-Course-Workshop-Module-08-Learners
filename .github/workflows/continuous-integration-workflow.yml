@@ -39,7 +39,13 @@ jobs:
     - name: Docker Image Build
       run: docker build -t lachiexyz/dotnettemplate .
       working-directory: .
+
+    - name: Docker Login
+      env: 
+        DOCKER_HUB_TOKEN: ${{ secrets.DOCKER_HUB_TOKEN }} 
+      run: echo $DOCKER_HUB_TOKEN | docker login --username lachiexyz --password-stdin
+      working-directory: .
     
     - name: Docker Image Push
-      run: echo "da338c0a-5304-4118-9b0a-f6af8098773f" | docker login --username lachiexyz --pasword-stdin && docker push lachiexyz/dotnettemplate
+      run: docker push lachiexyz/dotnettemplate
       working-directory: .
