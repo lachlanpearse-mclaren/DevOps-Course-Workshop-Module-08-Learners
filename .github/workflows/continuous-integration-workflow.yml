@@ -40,15 +40,27 @@ jobs:
       working-directory: ./DotnetTemplate.Web
 
     - name: Docker Image Build
-      run: docker build -t lachiexyz/dotnettemplate .
+      run: docker build -t registry.heroku.com/lp-dotnettemplate/web .
       working-directory: .
 
-    - name: Docker Login
+    - name: Heroku Container Login
       env: 
-        DOCKER_HUB_TOKEN: ${{ secrets.DOCKER_HUB_TOKEN }} 
-      run: echo $DOCKER_HUB_TOKEN | docker login --username lachiexyz --password-stdin
+        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }} 
+        HEROKU_EMAIL: ${{ secrets.HEROKU_EMAIL }} 
+      run: heroku container:login
       working-directory: .
     
-    - name: Docker Image Push
-      run: docker push lachiexyz/dotnettemplate
+    - name: Heroku Container Push
+      env: 
+        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }} 
+        HEROKU_EMAIL: ${{ secrets.HEROKU_EMAIL }} 
+      run: heroku container:push web --app lp-dotnettest
       working-directory: .
+
+    - name: Heroku Container Release
+      env: 
+        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }} 
+        HEROKU_EMAIL: ${{ secrets.HEROKU_EMAIL }} 
+      run: heroku container:release web --app lp-dotnettest
+      working-directory: .
+    
