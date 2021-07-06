@@ -35,3 +35,10 @@ jobs:
     - name: Typescript test
       run: npm run test
       working-directory: ./DotnetTemplate.Web
+
+    - name: Docker Image Build
+      run: docker build -t lachiexyz/dotnettemplate .
+      working-directory: .
+    
+    - name: Docker Image Push
+      run: docker push lachiexyz/dotnettemplate
