@@ -42,3 +42,4 @@ jobs:
     
     - name: Docker Image Push
       run: docker push lachiexyz/dotnettemplate
+      working-directory: .
