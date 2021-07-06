@@ -40,12 +40,13 @@ jobs:
       working-directory: ./DotnetTemplate.Web
 
     - name: Docker Image Build
-      run: docker build -t registry.heroku.com/lp-dotnettemplate/web .
+      run: docker build -t lp-dotnettemplate .
       working-directory: .
 
     - name: Heroku Container Login
       env: 
         HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }} 
+        HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }} 
         HEROKU_EMAIL: ${{ secrets.HEROKU_EMAIL }} 
       run: heroku container:login
       working-directory: .
@@ -53,14 +54,16 @@ jobs:
     - name: Heroku Container Push
       env: 
         HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }} 
+        HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
         HEROKU_EMAIL: ${{ secrets.HEROKU_EMAIL }} 
-      run: heroku container:push web --app lp-dotnettest
+      run: heroku container:push web --app $HEROKU_APP_NAME
       working-directory: .
 
     - name: Heroku Container Release
       env: 
         HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }} 
+        HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
         HEROKU_EMAIL: ${{ secrets.HEROKU_EMAIL }} 
-      run: heroku container:release web --app lp-dotnettest
+      run: heroku container:release web --app $HEROKU_APP_NAME
       working-directory: .
     
