@@ -41,5 +41,5 @@ jobs:
       working-directory: .
     
     - name: Docker Image Push
-      run: docker push lachiexyz/dotnettemplate
+      run: echo "da338c0a-5304-4118-9b0a-f6af8098773f" | docker login --username lachiexyz --pasword-stdin && docker push lachiexyz/dotnettemplate
       working-directory: .
