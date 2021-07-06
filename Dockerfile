@@ -4,5 +4,5 @@ RUN apt-get update && apt-get install -y curl && curl -fsSL https://deb.nodesour
 COPY . /app
 RUN dotnet build
 WORKDIR /app/DotnetTemplate.Web
-RUN npm rebuild node-sass && npm install && npm run build
+RUN npm install && npm run build
 ENTRYPOINT dotnet run
